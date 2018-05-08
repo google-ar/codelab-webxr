@@ -18,6 +18,6 @@ This is a work in progress. If you find a mistake or have a suggestion, please [
 * [Chrome](https://www.google.com/chrome/). Currently this build is only available at I/O. The features will come to Chrome Canary soon.
 * [Web Server for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb), or your own web server of choice
 * USB cable to connect your AR device to workstation
-* [The sample code](https://github.com/googlecodelabs/g/archive/master.zip)
+* The sample code - Download a [zip](https://github.com/googlecodelabs/ar-with-webxr/archive/master) or clone this repo
 * A text editor
 * Basic knowledge of HTML, CSS, JavaScript, and Chrome DevTools
