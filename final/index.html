@@ -1,0 +1,65 @@
+<!doctype html>
+<!--
+/*
+ * Copyright 2017 Google Inc. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building an augmented reality application with the WebXR Device API</title>
+    <link rel="stylesheet" type="text/css" href="../shared/app.css" />
+    <link rel="stylesheet" type="text/css" href="../third_party/mdl/material.min.css" />
+  </head>
+  <body>
+    <div id="enter-ar-info" class="demo-card mdl-card mdl-shadow--4dp">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Augmented Reality with the WebXR Device API</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+        This is an experiment using augmented reality features with the WebXR Device API.
+        Upon entering AR, you will be surrounded by a world of cubes.
+        Learn more about these features from the <a href="https://codelabs.developers.google.com/codelabs/ar-with-webxr">Building an augmented reality application with the WebXR Device API</a> Code Lab.
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a id="enter-ar" class="mdl-button mdl-button--raised mdl-button--accent">
+          Start augmented reality
+        </a>
+      </div>
+    </div>
+    <div id="unsupported-info" class="demo-card mdl-card mdl-shadow--4dp">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">Unsupported Browser</h2>
+      </div>
+      <div class="mdl-card__supporting-text">
+          Your browser does not support AR features with WebXR. Learn more about these features from the <a href="https://codelabs.developers.google.com/codelabs/ar-with-webxr">Building an augmented reality application with the WebXR Device API</a> Code Lab.
+      </div>
+    </div>
+    <div id="stabilization"></div>
+    <div id="info">
+        <span>
+            <a href="https://poly.google.com/view/dK08uQ8-Zm9">Model</a> by
+            <a href="https://poly.google.com/user/f8cGQY15_-g">Naomi Chen</a> /
+            <a href="https://creativecommons.org/licenses/by/2.0/">CC-BY</a>
+        </span><br />
+    </div>
+    <script src="../third_party/three.js/three.js"></script>
+    <script src="../third_party/three.js/OBJLoader.js"></script>
+    <script src="../third_party/three.js/MTLLoader.js"></script>
+    <script src="../shared/utils.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
