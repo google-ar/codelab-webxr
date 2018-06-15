@@ -171,7 +171,7 @@ class App {
     this.reticle = new Reticle(this.session, this.camera);
     this.scene.add(this.reticle);
 
-    this.frameOfRef = await this.session.requestFrameOfReference('eyeLevel');
+    this.frameOfRef = await this.session.requestFrameOfReference('eye-level');
     this.session.requestAnimationFrame(this.onXRFrame);
 
     window.addEventListener('click', this.onClick);

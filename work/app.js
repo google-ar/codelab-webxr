@@ -135,7 +135,7 @@ class App {
     this.camera = new THREE.PerspectiveCamera();
     this.camera.matrixAutoUpdate = false;
 
-    this.frameOfRef = await this.session.requestFrameOfReference('eyeLevel');
+    this.frameOfRef = await this.session.requestFrameOfReference('eye-level');
     this.session.requestAnimationFrame(this.onXRFrame);
   }
 
