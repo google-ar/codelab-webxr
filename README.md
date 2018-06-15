@@ -4,6 +4,8 @@ This code has the resources you need for the codelab [Building an augmented real
 
 This is a work in progress. If you find a mistake or have a suggestion, please [file an issue](https://github.com/googlecodelabs/ar-with-webxr/issues). Thanks!
 
+You can [view the completed web site here](https://googlecodelabs.github.io/ar-with-webxr/final).
+
 ## What you'll learn
 
 * How to use the WebXR Device API
