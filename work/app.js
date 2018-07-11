@@ -73,7 +73,10 @@ class App {
       // we just created.
       // Note that `device.requestSession()` must be called in response to
       // a user gesture, hence this function being a click handler.
-      const session = await this.device.requestSession({ outputContext: ctx });
+      const session = await this.device.requestSession({
+        outputContext: ctx,
+        environmentIntegration: true,
+      });
 
       // If `requestSession` is successful, add the canvas to the
       // DOM since we know it will now be used.
