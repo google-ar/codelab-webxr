@@ -15,7 +15,7 @@ You can [view the completed web site here](https://googlecodelabs.github.io/ar-w
 ## What you'll need
 
 * A workstation for coding and hosting static web content
-* [ARCore-capable Android device](https://developers.google.com/ar/discover/#supported_devices)
+* [ARCore-capable Android device](https://developers.google.com/ar/discover/#supported_devices) running [Android 8.0 Oreo](https://www.android.com/versions/oreo-8-0/)
 * ARCore installed (Chrome will automatically prompt you to install ARCore)
 * [Chrome](https://www.google.com/chrome/). You'll need a version of Chrome that's >= 69.0.3453.2, at the time of writing, only in Chrome Canary.
 * [Web Server for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb), or your own web server of choice
