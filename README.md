@@ -17,7 +17,7 @@ You can [view the completed web site here](https://googlecodelabs.github.io/ar-w
 * A workstation for coding and hosting static web content
 * [ARCore-capable Android device](https://developers.google.com/ar/discover/#supported_devices) running [Android 8.0 Oreo](https://www.android.com/versions/oreo-8-0/)
 * ARCore installed (Chrome will automatically prompt you to install ARCore)
-* [Chrome](https://www.google.com/chrome/). You'll need a version of Chrome that's >= 69.0.3453.2, at the time of writing, only in Chrome Canary.
+* [Chrome Canary](https://www.google.com/chrome/canary). You'll need a version of Chrome that's >= 70, and use a Canary or Dev build of Chrome (ARCore bindings are not currently shipping in release/beta).
 * [Web Server for Chrome](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb), or your own web server of choice
 * USB cable to connect your AR device to workstation
 * The sample code - Download a [zip](https://github.com/googlecodelabs/ar-with-webxr/archive/master) or clone this repo
