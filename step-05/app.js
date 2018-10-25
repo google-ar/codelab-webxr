@@ -197,8 +197,6 @@ class App {
         this.camera.matrix.getInverse(viewMatrix);
         this.camera.updateMatrixWorld(true);
 
-        this.renderer.clearDepth();
-
         // Render our scene with our THREE.WebGLRenderer
         this.renderer.render(this.scene, this.camera);
       }

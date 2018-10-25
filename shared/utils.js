@@ -243,19 +243,4 @@ window.DemoUtils = {
                              targetPos.z - looker.position.z);
     looker.rotation.set(0, angle, 0);
   },
-
-  /**
-   * three.js switches back to framebuffer 0 after using a render target,
-   * which causes issues when writing to our WebXR baseLayer's framebuffer.
-   * We ensure before rendering every object in our scene that we reset our
-   * framebuffer back to the baseLayer's. This is very hacky by overriding
-   * all Object3D's onBeforeRender handler.
-   *
-   * @param {App} app
-   */
-  fixFramebuffer(app) {
-    THREE.Object3D.prototype.onBeforeRender = () => {
-      app.gl.bindFramebuffer(app.gl.FRAMEBUFFER, app.session.baseLayer.framebuffer);
-    }
-  }
 };

@@ -135,16 +135,18 @@ class App {
     // using our new renderer's context
     this.session.baseLayer = new XRWebGLLayer(this.session, this.gl);
 
+    // Set the XRSession framebuffer on our three.js renderer rather
+    // than using the default framebuffer -- this is necessary for things
+    // in three.js that use other render targets, like shadows.
+    const framebuffer = this.session.baseLayer.framebuffer;
+    this.renderer.setFramebuffer(framebuffer);
+
     // A THREE.Scene contains the scene graph for all objects in the
     // render scene. Call our utility which gives us a THREE.Scene
     // with a few lights and surface to render our shadows. Lights need
     // to be configured in order to use shadows, see `shared/utils.js`
     // for more information.
     this.scene = DemoUtils.createLitScene();
-
-    // Fixes an issue with three.js switching framebuffer back to 0
-    // after using a render target, fixes an issue with shadows.
-    DemoUtils.fixFramebuffer(this);
 
     // Use the DemoUtils.loadModel to load our OBJ and MTL. The promise
     // resolves to a THREE.Group containing our mesh information.
@@ -218,8 +220,6 @@ class App {
         const viewMatrix = new THREE.Matrix4().fromArray(pose.getViewMatrix(view));
         this.camera.matrix.getInverse(viewMatrix);
         this.camera.updateMatrixWorld(true);
-
-        this.renderer.clearDepth();
 
         // Render our scene with our THREE.WebGLRenderer
         this.renderer.render(this.scene, this.camera);
