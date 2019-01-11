@@ -1,6 +1,6 @@
 # Building an augmented reality application with the WebXR Device API
 
-> 🚨 *Will not work in latest Chrome Canary* 🚨
+> ### 🚨 Will not work in latest Chrome Canary 🚨
 > The WebXR Device API is undergoing a lot of changes currently. This codelab will only work in Chrome Canary/Dev versions 70-72.
 
 This code has the resources you need for the codelab [Building an augmented reality application with the WebXR Device API](https://codelabs.developers.google.com/codelabs/ar-with-webxr/#0).
