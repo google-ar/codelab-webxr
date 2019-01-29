@@ -129,7 +129,8 @@ class App {
 
     // Ensure that the context we want to write to is compatible
     // with our XRDevice
-    await this.gl.setCompatibleXRDevice(this.session.device);
+    //API change: setCompatibleXRDevice() -> makeXRCompatible()
+    await this.gl.makeXRCompatible(this.session.device);
 
     // Set our session's baseLayer to an XRWebGLLayer
     // using our new renderer's context
@@ -176,7 +177,11 @@ class App {
     this.reticle = new Reticle(this.session, this.camera);
     this.scene.add(this.reticle);
 
-    this.frameOfRef = await this.session.requestFrameOfReference('eye-level');
+    //API change: requestFrameOfReference() -> requestReferenceSpace()
+    this.frameOfRef = await this.session.requestReferenceSpace({
+      type: 'stationary',
+      subtype: 'eye-level',
+    });
     this.session.requestAnimationFrame(this.onXRFrame);
 
     window.addEventListener('click', this.onClick);
@@ -188,7 +193,8 @@ class App {
    */
   onXRFrame(time, frame) {
     let session = frame.session;
-    let pose = frame.getDevicePose(this.frameOfRef);
+    //API change: getDevicePose() -> getViewerPose()
+    let pose = frame.getViewerPose(this.frameOfRef);
 
     // Update the reticle's position
     this.reticle.update(this.frameOfRef);
@@ -210,14 +216,16 @@ class App {
       // Our XRFrame has an array of views. In the VR case, we'll have
       // two views, one for each eye. In mobile AR, however, we only
       // have one view.
-      for (let view of frame.views) {
+      //API change: frame.views -> pose.views
+      for (let view of pose.views) {
         const viewport = session.baseLayer.getViewport(view);
         this.renderer.setSize(viewport.width, viewport.height);
 
         // Set the view matrix and projection matrix from XRDevicePose
         // and XRView onto our THREE.Camera.
         this.camera.projectionMatrix.fromArray(view.projectionMatrix);
-        const viewMatrix = new THREE.Matrix4().fromArray(pose.getViewMatrix(view));
+        //API change: pose.getViewMatrix(view) -> view.viewMatrix
+        const viewMatrix = new THREE.Matrix4().fromArray(view.viewMatrix);
         this.camera.matrix.getInverse(viewMatrix);
         this.camera.updateMatrixWorld(true);
 
@@ -263,8 +271,8 @@ class App {
     const origin = new Float32Array(ray.origin.toArray());
     const direction = new Float32Array(ray.direction.toArray());
     const hits = await this.session.requestHitTest(origin,
-                                                   direction,
-                                                   this.frameOfRef);
+      direction,
+      this.frameOfRef);
 
     // If we found at least one hit...
     if (hits.length) {
