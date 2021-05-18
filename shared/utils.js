@@ -13,92 +13,31 @@
  * limitations under the License.
  */
 
-// remaps opacity from 0 to 1
-const opacityRemap = mat => {
-  if (mat.opacity === 0) {
-    mat.opacity = 1;
-  }
-};
-
+window.gltfLoader = new THREE.GLTFLoader();
 /**
  * The Reticle class creates an object that repeatedly calls
  * `xrSession.requestHitTest()` to render a ring along a found
  * horizontal surface.
  */
 class Reticle extends THREE.Object3D {
-  /**
-   * @param {XRSession} xrSession
-   * @param {THREE.Camera} camera
-   */
-  constructor(xrSession, camera) {
+  constructor() {
     super();
 
-    this.loader = new THREE.TextureLoader();
+    this.loader = new THREE.GLTFLoader();
+    this.loader.load("https://immersive-web.github.io/webxr-samples/media/gltf/reticle/reticle.gltf", (gltf) => {
+      this.add(gltf.scene);
+    })
 
-    let geometry = new THREE.RingGeometry(0.1, 0.11, 24, 1);
-    let material = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    // Orient the geometry so its position is flat on a horizontal surface
-    geometry.applyMatrix(new THREE.Matrix4().makeRotationX(THREE.Math.degToRad(-90)));
-
-    this.ring = new THREE.Mesh(geometry, material);
-
-    geometry = new THREE.PlaneBufferGeometry(0.15, 0.15);
-    // Orient the geometry so its position is flat on a horizontal surface,
-    // as well as rotate the image so the anchor is facing the user
-    geometry.applyMatrix(new THREE.Matrix4().makeRotationX(THREE.Math.degToRad(-90)));
-    geometry.applyMatrix(new THREE.Matrix4().makeRotationY(THREE.Math.degToRad(0)));
-    material = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      transparent: true,
-      opacity: 0
-    });
-    this.icon = new THREE.Mesh(geometry, material);
-
-    // Load the anchor texture and apply it to our material
-    // once loaded
-    this.loader.load('../assets/Anchor.png', texture => {
-      this.icon.material.opacity = 1;
-      this.icon.material.map = texture;
-    });
-
-    this.add(this.ring);
-    this.add(this.icon);
-
-    this.session = xrSession;
     this.visible = false;
-    this.camera = camera;
-  }
-
-  /**
-   * Fires a hit test in the middle of the screen and places the reticle
-   * upon the surface if found.
-   *
-   * @param {XRCoordinateSystem} frameOfRef
-   */
-  async update(frameOfRef) {
-    this.raycaster = this.raycaster || new THREE.Raycaster();
-    this.raycaster.setFromCamera({ x: 0, y: 0 }, this.camera);
-    const ray = this.raycaster.ray;
-
-    const origin = new Float32Array(ray.origin.toArray());
-    const direction = new Float32Array(ray.direction.toArray());
-    const hits = await this.session.requestHitTest(origin,
-                                                   direction,
-                                                   frameOfRef);
-
-    if (hits.length) {
-      const hit = hits[0];
-      const hitMatrix = new THREE.Matrix4().fromArray(hit.hitMatrix);
-
-      // Now apply the position from the hitMatrix onto our model
-      this.position.setFromMatrixPosition(hitMatrix);
-  
-      DemoUtils.lookAtOnY(this, this.camera);
-
-      this.visible = true;
-    }
   }
 }
+
+window.gltfLoader.load("https://immersive-web.github.io/webxr-samples/media/gltf/sunflower/sunflower.gltf", function(gltf) {
+  const flower = gltf.scene.children.find(c => c.name === 'sunflower')
+  flower.castShadow = true;
+  window.sunflower = gltf.scene;
+});
+
 
 window.DemoUtils = {
   /**
@@ -180,67 +119,12 @@ window.DemoUtils = {
 
     return scene;
   },
-
-  /**
-   * Loads an OBJ model with an MTL material applied.
-   * Returns a THREE.Group object containing the mesh.
-   *
-   * @param {string} objURL
-   * @param {string} mtlURL
-   * @return {Promise<THREE.Group>}
-   */
-  loadModel(objURL, mtlURL) {
-    // OBJLoader and MTLLoader are not a part of three.js core, and
-    // must be included as separate scripts.
-    const objLoader = new THREE.OBJLoader();
-    const mtlLoader = new THREE.MTLLoader();
-
-    // Set texture path so that the loader knows where to find
-    // linked resources
-    mtlLoader.setTexturePath(mtlURL.substr(0, mtlURL.lastIndexOf('/') + 1));
-
-    // remaps ka, kd, & ks values of 0,0,0 -> 1,1,1, models from
-    // Poly benefit due to how they were encoded.
-    mtlLoader.setMaterialOptions({ ignoreZeroRGBs: true });
-
-    // OBJLoader and MTLLoader provide callback interfaces; let's
-    // return a Promise and resolve or reject based off of the asset
-    // downloading.
-    return new Promise((resolve, reject) => {
-      mtlLoader.load(mtlURL, materialCreator => {
-        // We have our material package parsed from the .mtl file.
-        // Be sure to preload it.
-        materialCreator.preload();
-
-        // Remap opacity values in the material to 1 if they're set as
-        // 0; this is another peculiarity of Poly models and some
-        // MTL materials.
-        for (let material of Object.values(materialCreator.materials)) {
-          opacityRemap(material);
-        }
-
-        // Give our OBJ loader our materials to apply it properly to the model
-        objLoader.setMaterials(materialCreator);
-
-        // Finally load our OBJ, and resolve the promise once found.
-        objLoader.load(objURL, resolve, function(){}, reject);
-      }, function(){}, reject);
-    });
-  },
-
-  /**
-   * Similar to THREE.Object3D's `lookAt` function, except we only
-   * want to rotate on the Y axis. In our AR use case, we don't want
-   * our model rotating in all axes, instead just on the Y.
-   *
-   * @param {THREE.Object3D} looker
-   * @param {THREE.Object3D} target
-   */
-  lookAtOnY(looker, target) {
-    const targetPos = new THREE.Vector3().setFromMatrixPosition(target.matrixWorld);
-
-    const angle = Math.atan2(targetPos.x - looker.position.x,
-                             targetPos.z - looker.position.z);
-    looker.rotation.set(0, angle, 0);
-  },
 };
+
+/**
+ * Toggle on a class on the page to disable the "Enter AR"
+ * button and display the unsupported browser message.
+ */
+function onNoXRDevice() {
+  document.body.classList.add('unsupported');
+}

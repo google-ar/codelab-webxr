@@ -25,17 +25,10 @@ body {
   background-color: rgb(69, 90, 100);
 }
 
-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-}
-
 div.demo-card {
   width: 80vw;
   margin: 20px auto;
+  padding: 16px;
 }
 
 #enter-ar-info .mdl-card__title {
@@ -110,3 +103,5 @@ body.ar #stabilization {
 body.ar.stabilized #stabilization {
   display: none;
 }
+
+#wrong-hosting-root { display: none; }

@@ -48,7 +48,6 @@ class App {
       // With everything set up, start the app.
       await this.onSessionStarted();
     } catch(e) {
-      console.log(e);
       onNoXRDevice();
     }
   }
@@ -93,14 +92,11 @@ class App {
   }
 
   /** Place a sunflower when the screen is tapped. */
-  onSelect = () => {
+   onSelect = () => {
     if (window.sunflower) {
       const clone = window.sunflower.clone();
       clone.position.copy(this.reticle.position);
       this.scene.add(clone)
-
-      const shadowMesh = this.scene.children.find(c => c.name === 'shadowMesh');
-      shadowMesh.position.y = clone.position.y;
     }
   }
 
@@ -168,8 +164,6 @@ class App {
       context: this.gl
     });
     this.renderer.autoClear = false;
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
     // Initialize our demo scene.
     this.scene = DemoUtils.createLitScene();
