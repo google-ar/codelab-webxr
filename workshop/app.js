@@ -142,10 +142,9 @@ class App {
     //     this.reticle.position.set(hitPose.transform.position.x, hitPose.transform.position.y, hitPose.transform.position.z)
     //     this.reticle.updateMatrixWorld(true);
     //   }
+    //   /** Render the scene with THREE.WebGLRenderer. */
+    //   this.renderer.render(this.scene, this.camera)
     // }
-
-    /** Render the scene with THREE.WebGLRenderer. */
-    // this.renderer.render(this.scene, this.camera)
   }
 
   /**
